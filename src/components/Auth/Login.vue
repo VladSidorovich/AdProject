@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6" xs="12">
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark flat>
-            <v-toolbar-title>Login form</v-toolbar-title>
+            <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form ref="form" v-model="valid" validation>
@@ -28,7 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Login</v-btn>
+            <v-btn color="primary" :disabled="!valid || loading" :loading="loading" @click="onSubmit">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -40,6 +40,11 @@
 export default {
   mounted () {
     this.valid = false
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
   },
   data: () => ({
     email: '',
@@ -61,7 +66,11 @@ export default {
           email: this.email,
           password: this.password
         }
-        console.log(user)
+        this.$store.dispatch('loginUser', user)
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch(() => {})
       }
     }
   }

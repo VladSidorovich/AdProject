@@ -37,7 +37,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" :disabled="!valid" @click="onSubmit">Create Account</v-btn>
+            <v-btn color="primary" :disabled="!valid || loading" @click="onSubmit" :loading="loading">Create Account</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -47,6 +47,11 @@
 
 <script>
 export default {
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   mounted () {
     this.valid = false
   },
@@ -77,7 +82,8 @@ export default {
           email: this.email,
           password: this.password
         }
-        console.log(user)
+        this.$store.dispatch('registerUser', user)
+          .then(() => this.$router.push('/'))
       }
     }
   }

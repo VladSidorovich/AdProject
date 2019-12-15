@@ -66,9 +66,10 @@ export default {
       const ad = {
         title: this.title,
         description: this.description,
-        promo: this.switch1
+        promo: this.switch1,
+        imageSrc: 'https://bipbap.ru/wp-content/uploads/2017/08/16.jpg'
       }
-      console.log(ad)
+      this.$store.dispatch('createAd', ad)
     }
   }
 }
