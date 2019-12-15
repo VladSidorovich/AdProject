@@ -40,6 +40,7 @@
 export default {
   mounted () {
     this.valid = false
+    if (this.$route.query['loginError']) this.$store.dispatch('setError', 'Please log in to access this page...')
   },
   computed: {
     loading () {

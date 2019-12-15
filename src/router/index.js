@@ -7,6 +7,7 @@ import NewAd from '../components/Ads/NewAd'
 import Login from '../components/Auth/Login'
 import Registration from '../components/Auth/Registration.vue'
 import Orders from '../components/User/Orders.vue'
+import AuthGuard from '../router/auth-guard'
 
 Vue.use(VueRouter)
 
@@ -21,12 +22,14 @@ export default new VueRouter({
     {
       path: '/list',
       name: 'list',
-      component: AdList
+      component: AdList,
+      beforeEnter: AuthGuard
     },
     {
       path: '/new',
       name: 'new',
-      component: NewAd
+      component: NewAd,
+      beforeEnter: AuthGuard
     },
     {
       path: '/registration',
@@ -36,13 +39,15 @@ export default new VueRouter({
     {
       path: '/orders',
       name: 'orders',
-      component: Orders
+      component: Orders,
+      beforeEnter: AuthGuard
     },
     {
       path: '/ad/:id',
       name: 'ad',
       props: true,
-      component: Ad
+      component: Ad,
+      beforeEnter: AuthGuard
     },
     {
       path: '/login',

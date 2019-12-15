@@ -44,7 +44,7 @@
            <v-layout>
             <v-flex >
              <v-spacer />
-             <v-btn :disabled="!valid" class="success" @click="createAd"> Create ad</v-btn>
+             <v-btn :disabled="!valid || loading" :loading="loading" class="success" @click="createAd"> Create ad</v-btn>
             </v-flex>
           </v-layout>
         </v-form>
@@ -55,6 +55,11 @@
 
 <script>
 export default {
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   data: () => ({
     valid: '',
     title: '',
@@ -70,6 +75,10 @@ export default {
         imageSrc: 'https://bipbap.ru/wp-content/uploads/2017/08/16.jpg'
       }
       this.$store.dispatch('createAd', ad)
+        .then(() => {
+          this.$router.push('/list')
+        })
+        .catch(() => {})
     }
   }
 }
