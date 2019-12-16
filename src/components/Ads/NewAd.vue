@@ -20,15 +20,22 @@
           />
           <v-layout>
             <v-flex class="mb-3">
-              <v-btn color="warning">
+              <v-btn color="warning" @click="triggerUpload">
                 upload
-                <v-icon right> cloud_upload</v-icon>
+                <v-icon right>cloud_upload</v-icon>
               </v-btn>
+              <input
+                ref='fileInput'
+                type="file"
+                style="display: none;"
+                accept="image/*"
+                @change="onFileChange"
+              />
             </v-flex>
           </v-layout>
           <v-layout>
             <v-flex >
-              <img height="100px" src="https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg" />
+              <img height="100px" :src="imageSrc" v-if="imageSrc"/>
             </v-flex>
           </v-layout>
           <v-layout>
@@ -44,7 +51,7 @@
            <v-layout>
             <v-flex >
              <v-spacer />
-             <v-btn :disabled="!valid || loading" :loading="loading" class="success" @click="createAd"> Create ad</v-btn>
+             <v-btn :disabled="!valid || !image || loading" :loading="loading" class="success" @click="createAd"> Create ad</v-btn>
             </v-flex>
           </v-layout>
         </v-form>
@@ -64,21 +71,37 @@ export default {
     valid: '',
     title: '',
     description: '',
-    switch1: false
+    switch1: false,
+    imageSrc: null,
+    image: ''
   }),
   methods: {
-    createAd () {
-      const ad = {
-        title: this.title,
-        description: this.description,
-        promo: this.switch1,
-        imageSrc: 'https://bipbap.ru/wp-content/uploads/2017/08/16.jpg'
+    onFileChange (event) {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.imageSrc = reader.result
       }
-      this.$store.dispatch('createAd', ad)
-        .then(() => {
-          this.$router.push('/list')
-        })
-        .catch(() => {})
+      reader.readAsDataURL(file)
+      this.image = file
+    },
+    triggerUpload () {
+      this.$refs.fileInput.click()
+    },
+    createAd () {
+      if (this.$refs.form.validate() && this.image) {
+        const ad = {
+          title: this.title,
+          description: this.description,
+          promo: this.switch1,
+          image: this.image
+        }
+        this.$store.dispatch('createAd', ad)
+          .then(() => {
+            this.$router.push('/list')
+          })
+          .catch(() => {})
+      }
     }
   }
 }
