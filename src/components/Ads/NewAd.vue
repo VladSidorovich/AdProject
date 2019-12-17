@@ -44,7 +44,6 @@
                 color="primary"
                 v-model="switch1"
                 label="Add to promo?"
-                :rules="[v => !!v || 'should be true']"
               ></v-switch>
             </v-flex>
           </v-layout>

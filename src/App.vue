@@ -80,10 +80,10 @@ export default {
   methods: {
     closeError () {
       this.$store.dispatch('clearError')
-      this.$router.push('/')
     },
     onLogout () {
       this.$store.dispatch('logoutUser')
+      if (this.$route.path !== '/') this.$router.push('/')
     }
   },
   computed: {
