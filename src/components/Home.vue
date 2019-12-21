@@ -10,7 +10,7 @@
             :src="ad.imageSrc"
           >
           <div class="car-link">
-            <v-btn color="error" :to="'/ad/' + ad.id"> description </v-btn>
+            <v-btn color="error" :to="'/ad/' + ad.id"> {{ad.title}} </v-btn>
           </div>
           </v-carousel-item>
         </v-carousel>
@@ -31,7 +31,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn text :to="'/ad/' + ad.id">Open</v-btn>
-            <v-btn color="primary">Buy</v-btn>
+            <app-buy-modal :ad="ad"/>
           </v-card-actions>
         </v-card>
       </v-flex>

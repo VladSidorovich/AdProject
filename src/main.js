@@ -4,9 +4,12 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import BuyModalComponent from './components/Shared/BuyModal'
 import firebase from 'firebase/app'
 
 Vue.config.productionTip = false
+
+Vue.component('app-buy-modal', BuyModalComponent)
 
 new Vue({
   router,

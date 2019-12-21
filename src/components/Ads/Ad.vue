@@ -12,7 +12,7 @@
           <v-card-actions>
             <v-spacer />
             <EditAdModal :ad="ad" v-if="isOwner"/>
-            <v-btn class="success"> Buy </v-btn>
+            <app-buy-modal :ad="ad"/>
           </v-card-actions>
         </v-card>
         <div v-else>
@@ -44,7 +44,7 @@ export default {
       return this.$store.getters.loading
     },
     isOwner () {
-      return this.ad.ownerId === this.$store.getters.user
+      return this.ad.ownerId === this.$store.getters.user.id
     }
   }
 }
