@@ -6,6 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import BuyModalComponent from './components/Shared/BuyModal'
 import firebase from 'firebase/app'
+import './stylus/main.styl'
 
 Vue.config.productionTip = false
 

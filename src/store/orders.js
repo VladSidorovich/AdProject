@@ -18,6 +18,12 @@ export default {
   mutations: {
     loadOrders (state, payload) {
       state.orders = payload
+    },
+    updateOrder (state, payload) {
+      const order = state.orders.find(o => {
+        return o.id === payload
+      })
+      order.done = true
     }
   },
   actions: {
@@ -52,10 +58,12 @@ export default {
     },
     async markOrderDone ({ commit, getters }, payload) {
       commit('clearError')
+
       try {
         await firebase.database().ref(`/users/${getters.user.id}/orders`).child(payload).update({
           done: true
         })
+        commit('updateOrder', payload)
       } catch (e) {
         commit('setError', e.message)
         throw e
@@ -70,7 +78,7 @@ export default {
       return state.orders.filter(o => !o.done)
     },
     orders (state, getters) {
-      return getters.undoneOrders.concat(getters.doneOrders)
+      return state.orders
     }
   }
 }

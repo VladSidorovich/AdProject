@@ -23,8 +23,8 @@
                 </v-list-item-action>
 
                 <v-list-item-content>
-                  <v-list-item-title>order.name</v-list-item-title>
-                  <v-list-item-subtitle>order.phone</v-list-item-subtitle>
+                  <v-list-item-title>{{order.name}}</v-list-item-title>
+                  <v-list-item-subtitle>{{order.phone}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-spacer />
@@ -54,9 +54,6 @@ export default {
   methods: {
     markDone (order) {
       this.$store.dispatch('markOrderDone', order.id)
-        .then(() => {
-          order.done = true
-        })
         .catch(() => {})
     }
   },
